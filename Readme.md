@@ -4,4 +4,4 @@ This extenstion for [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AU
 
 ![](images/img1.jpg)
 
-Or even a lazy way to upscale video, restore faces etc
+Or even a lazy way to upscale video, restore faces, [reactor](https://github.com/Gourieff/sd-webui-reactor) faceswapping, etc
