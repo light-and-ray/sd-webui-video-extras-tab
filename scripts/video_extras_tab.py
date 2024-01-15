@@ -54,10 +54,7 @@ def wrapExtrasSubmitButton(component, **kwargs):
     submitButton = component
     oldClick = submitButton.click
     def newClick(**kwargs):
-        fn=kwargs['fn']
-        def wrapper(taskId, pathIn, fps, pathOut, *args, **kwargs):
-            return process(taskId, pathIn, fps, pathOut, fn, *args, **kwargs)
-        kwargs['fn'] = call_queue.wrap_gradio_call(wrapper, extra_outputs=[None, ''])
+        kwargs['fn'] = call_queue.wrap_gradio_gpu_call(process, extra_outputs=[None, ''])
         kwargs['inputs'] = [kwargs['inputs'][0]] + [COMPONENTS.pathIn, COMPONENTS.fps,
                     COMPONENTS.pathOut] + kwargs['inputs'][1:]
         return oldClick(**kwargs)

@@ -1,6 +1,7 @@
 import os
 from modules.ui import plaintext_to_html
-from modules import progress, shared
+from modules import shared
+from modules.postprocessing import run_postprocessing
 import datetime
 from video_extras_tab.video_tools import getVideoFrames, save_video
 
@@ -12,12 +13,12 @@ showExtrasResultsIdx = 5
 
 
 
-def process(taskId, pathIn, fps, pathOut, extrasSubbmit, *args, **kwargs):
+def process(taskId, pathIn, fps, pathOut, *args, **kwargs):
     restoreOpts = None
     try:
         tabIndex = args[extrasModeIdx]
         if tabIndex != 3: # video
-            return extrasSubbmit(taskId, *args, **kwargs)
+            return run_postprocessing(*args, **kwargs)
 
         shared.total_tqdm.clear()
         shared.state.textinfo = 'video preparing'
@@ -49,16 +50,15 @@ def process(taskId, pathIn, fps, pathOut, extrasSubbmit, *args, **kwargs):
         shared.opts.use_upscaler_name_as_suffix = False
         shared.opts.live_previews_enable = False # crashes if True
 
-        _, _, html_comment, = extrasSubbmit(taskId, *args, **kwargs)
+        run_postprocessing(*args, **kwargs)
 
         shared.state.textinfo = 'video saving'
         print("generate done, generating video")
         save_video_path = os.path.join(pathOut, f'output_{os.path.basename(pathIn)}_{timestamp}.mp4')
         save_video(pathOut, fps_out, pathIn, save_video_path)
 
-        return [], plaintext_to_html(f"Saved into {save_video_path}"), html_comment
+        return [], plaintext_to_html(f"Saved into {save_video_path}"), ''
     finally:
-        progress.finish_task(taskId)
         if restoreOpts:
             restoreOpts()
 
