@@ -6,7 +6,7 @@ from video_extras_tab.video_tools import getVideoFrames, save_video
 
 extrasModeIdx = 0
 inputDirIdx = 3
-outputDifIdx = 4
+outputDirIdx = 4
 showExtrasResultsIdx = 5
 
 
@@ -35,7 +35,7 @@ def process(taskId, pathIn, fps, pathOut, extrasSubbmit, *args, **kwargs):
         temp_folder, fps_in, fps_out = getVideoFrames(pathIn, fps)
 
         args[inputDirIdx] = temp_folder
-        args[outputDifIdx] = pathOut
+        args[outputDirIdx] = pathOut
         args[extrasModeIdx] = 2 # batch from dir
         toRestore_opt1 = shared.opts.use_original_name_batch
         toRestore_opt2 = shared.opts.use_upscaler_name_as_suffix
@@ -47,16 +47,16 @@ def process(taskId, pathIn, fps, pathOut, extrasSubbmit, *args, **kwargs):
         restoreOpts = restoreOpts_
         shared.opts.use_original_name_batch = False
         shared.opts.use_upscaler_name_as_suffix = False
-        shared.opts.live_previews_enable = False # crashes it True
+        shared.opts.live_previews_enable = False # crashes if True
 
-        extrasSubbmit(taskId, *args, **kwargs)
+        _, _, html_comment, = extrasSubbmit(taskId, *args, **kwargs)
 
         shared.state.textinfo = 'video saving'
         print("generate done, generating video")
         save_video_path = os.path.join(pathOut, f'output_{os.path.basename(pathIn)}_{timestamp}.mp4')
         save_video(pathOut, fps_out, pathIn, save_video_path)
 
-        return [], "", plaintext_to_html(f"Saved into {save_video_path}"), ""
+        return [], plaintext_to_html(f"Saved into {save_video_path}"), html_comment
     finally:
         progress.finish_task(taskId)
         if restoreOpts:
