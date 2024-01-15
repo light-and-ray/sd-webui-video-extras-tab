@@ -31,17 +31,17 @@ def addTabIntoExtras(component, **kwargs):
             COMPONENTS.pathIn = gr.Textbox(
                 label="Input video",
                 placeholder="A video on the same machine where the server is running.",
-                elem_id="replacer_input_video")
+                elem_id="extras_input_video")
             COMPONENTS.fps = gr.Slider(
-                label='FPS', value=10.0, min=0.0, step=0.1, max=60.0,
+                label='FPS', value=0.0, min=0.0, step=0.1, max=240.0,
                 info="(0 = fps from input video)",
-                elem_id="replacer_video_fps")
+                elem_id="extras_video_fps")
             COMPONENTS.pathOut = gr.Textbox(
                 label="Output directory",
                 **shared.hide_dirs,
                 placeholder="Leave blank to save images to the default path.",
-                info='(default is the same directory with input video. Rusult is in "output_seed" subdirectory)',
-                elem_id="replacer_output_batch_dir")
+                info='(default is the same directory with input video. Rusult is in "output_timestamp" subdirectory)',
+                elem_id="extras_output_batch_dir")
 
     tab_video.select(fn=lambda: 3, inputs=[], outputs=[tabIndex])
 
