@@ -13,7 +13,7 @@ showExtrasResultsIdx = 5
 
 
 
-def process(taskId, pathIn, fps, pathOut, *args, **kwargs):
+def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
     restoreOpts = None
     try:
         tabIndex = args[extrasModeIdx]
@@ -48,7 +48,7 @@ def process(taskId, pathIn, fps, pathOut, *args, **kwargs):
         restoreOpts = restoreOpts_
         shared.opts.use_original_name_batch = False
         shared.opts.use_upscaler_name_as_suffix = False
-        shared.opts.live_previews_enable = False # crashes if True
+        shared.opts.live_previews_enable = enableLivePreview # crashes if True for webui == 1.7.x
 
         run_postprocessing(*args, **kwargs)
 

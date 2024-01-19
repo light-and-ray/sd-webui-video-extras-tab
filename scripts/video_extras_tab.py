@@ -11,6 +11,7 @@ class Components:
     pathIn : Any = None
     fps : Any = None
     pathOut : Any = None
+    enableLivePreview : Any = None
 
 
 COMPONENTS = Components()
@@ -42,6 +43,11 @@ def addTabIntoExtras(component, **kwargs):
                 placeholder="Leave blank to save images to the default path.",
                 info='(default is the same directory with input video. Rusult is in "output_timestamp" subdirectory)',
                 elem_id="extras_output_batch_dir")
+            COMPONENTS.enableLivePreview = gr.Checkbox(
+                label="Enable live preview",
+                value=False,
+                elem_id="extras_video_enable_live_preview",
+            )
 
     tab_video.select(fn=lambda: 3, inputs=[], outputs=[tabIndex])
 
@@ -56,7 +62,7 @@ def wrapExtrasSubmitButton(component, **kwargs):
     def newClick(**kwargs):
         kwargs['fn'] = call_queue.wrap_gradio_gpu_call(process, extra_outputs=[None, ''])
         kwargs['inputs'] = [kwargs['inputs'][0]] + [COMPONENTS.pathIn, COMPONENTS.fps,
-                    COMPONENTS.pathOut] + kwargs['inputs'][1:]
+            COMPONENTS.pathOut, COMPONENTS.enableLivePreview] + kwargs['inputs'][1:]
         return oldClick(**kwargs)
     submitButton.click = newClick
 
