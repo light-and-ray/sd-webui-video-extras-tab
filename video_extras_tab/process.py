@@ -53,7 +53,7 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
         run_postprocessing(*args, **kwargs)
 
         shared.state.textinfo = 'video saving'
-        save_video_path = os.path.join(pathOut, f'output_{os.path.splitext((os.path.basename(pathIn)))[0]}_{timestamp}.mp4')
+        save_video_path = os.path.join(pathOut, f'output_{os.path.basename(pathIn)}_{timestamp}.mp4')
         if len(save_video_path) > 260:
             save_video_path = os.path.join(pathOut, f'output_{timestamp}.mp4')
         save_video(pathOut, fps_out, pathIn, save_video_path)
