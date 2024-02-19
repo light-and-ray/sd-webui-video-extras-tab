@@ -34,7 +34,7 @@ def addTabIntoExtras(component, **kwargs):
                 placeholder="A video on the same machine where the server is running.",
                 elem_id="extras_input_video")
             COMPONENTS.fps = gr.Slider(
-                label='FPS', value=0.0, min=0.0, step=0.1, max=240.0,
+                label='FPS', value=0.0, step=0.1, minimum=0.0, maximum=240.0,
                 info="(0 = fps from input video)",
                 elem_id="extras_video_fps")
             COMPONENTS.pathOut = gr.Textbox(
