@@ -32,7 +32,7 @@ def separate_video_into_frames(video_path, fps_out, temp_folder):
         '-y',
         os.path.join(temp_folder, 'frame_%05d.png'),
     ]
-    print(' '.join(str(v) for v in ffmpeg_cmd))
+    print(' '.join(f"'{str(v)}'" if ' ' in str(v) else str(v) for v in ffmpeg_cmd))
     rc = subprocess.run(ffmpeg_cmd).returncode
     if rc != 0:
         raise Exception(f'ffmpeg exited with code {rc}. See console for details')
@@ -68,7 +68,7 @@ def save_video(frames_dir, fps, org_video, output_path):
         '-y',
         output_path
     ]
-    print(' '.join(str(v) for v in ffmpeg_cmd))
+    print(' '.join(f"'{str(v)}'" if ' ' in str(v) else str(v) for v in ffmpeg_cmd))
     rc = subprocess.run(ffmpeg_cmd).returncode
     if rc != 0:
         raise Exception(f'ffmpeg exited with code {rc}. See console for details')

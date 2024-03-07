@@ -5,6 +5,8 @@ from modules.postprocessing import run_postprocessing
 import datetime
 from video_extras_tab.video_tools import getVideoFrames, save_video
 
+videoTabIndex = 652
+
 extrasModeIdx = 0
 inputDirIdx = 3
 outputDirIdx = 4
@@ -12,12 +14,10 @@ showExtrasResultsIdx = 5
 
 
 
-
 def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
-    restoreOpts = None
+    restoreList = []
     try:
-        tabIndex = args[extrasModeIdx]
-        if tabIndex != 3: # video
+        if args[extrasModeIdx] != videoTabIndex:
             return run_postprocessing(*args, **kwargs)
 
         shared.total_tqdm.clear()
@@ -45,7 +45,7 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
             shared.opts.use_original_name_batch = toRestore_opt1
             shared.opts.use_upscaler_name_as_suffix = toRestore_opt2
             shared.opts.live_previews_enable = toRestore_opt3
-        restoreOpts = restoreOpts_
+        restoreList.append(restoreOpts_)
         shared.opts.use_original_name_batch = False
         shared.opts.use_upscaler_name_as_suffix = False
         shared.opts.live_previews_enable = enableLivePreview # crashes if True for webui == 1.7.x
@@ -60,8 +60,8 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
 
         return [], plaintext_to_html(f"Saved into {save_video_path}"), ''
     finally:
-        if restoreOpts:
-            restoreOpts()
+        for restore in restoreList:
+            restore()
 
 
 

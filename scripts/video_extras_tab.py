@@ -1,7 +1,7 @@
 import modules.scripts
 from modules import shared, call_queue
 import gradio as gr
-from video_extras_tab.process import process
+from video_extras_tab.process import process, videoTabIndex
 from dataclasses import dataclass
 from typing import Any
 
@@ -49,7 +49,7 @@ def addTabIntoExtras(component, **kwargs):
                 elem_id="extras_video_enable_live_preview",
             )
 
-    tab_video.select(fn=lambda: 3, inputs=[], outputs=[tabIndex])
+    tab_video.select(fn=lambda: videoTabIndex, inputs=[], outputs=[tabIndex])
 
 
 def wrapExtrasSubmitButton(component, **kwargs):
