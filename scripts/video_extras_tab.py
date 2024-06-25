@@ -45,7 +45,7 @@ def addTabIntoExtras(component, **kwargs):
                 elem_id="extras_output_batch_dir")
             COMPONENTS.enableLivePreview = gr.Checkbox(
                 label="Enable live preview",
-                value=False,
+                value=True,
                 elem_id="extras_video_enable_live_preview",
             )
 
