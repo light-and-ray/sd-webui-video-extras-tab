@@ -38,6 +38,7 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
         args[inputDirIdx] = temp_folder
         args[outputDirIdx] = pathOut
         args[extrasModeIdx] = 2 # batch from dir
+        args[showExtrasResultsIdx] = False
         toRestore_opt1 = shared.opts.use_original_name_batch
         toRestore_opt2 = shared.opts.use_upscaler_name_as_suffix
         toRestore_opt3 = shared.opts.live_previews_enable
@@ -65,5 +66,5 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
 
 
 
-    
+
 
