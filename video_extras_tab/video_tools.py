@@ -1,7 +1,9 @@
 import subprocess
 import cv2
 import os
+import urllib
 import modules.shared as shared
+from modules import errors
 from shutil import rmtree
 try:
     from imageio_ffmpeg import get_ffmpeg_exe
@@ -72,3 +74,26 @@ def save_video(frames_dir, fps, org_video, output_path):
     rc = subprocess.run(ffmpeg_cmd).returncode
     if rc != 0:
         raise Exception(f'ffmpeg exited with code {rc}. See console for details')
+
+
+def convertIntoPath(string: str) -> str:
+    string = string.strip()
+    if not string: return string
+    if len(string) > 3 and string[0] == string[-1] and string[0] in ('"', "'"):
+        string = string[1:-1]
+
+    schemes = ['file', 'fish']
+    prefixes = [f'{x}://' for x in schemes]
+    isURL = any(string.startswith(x) for x in prefixes)
+
+    if not isURL:
+        return string
+    else:
+        for prefix in prefixes:
+            if string.startswith(prefix):
+                string = urllib.parse.unquote(string.removeprefix(prefix))
+                string = string.removeprefix(string.split('/')[0]) # removes user:password@host:port if exists
+                return string
+
+        errors.report("Can't be here")
+        return string

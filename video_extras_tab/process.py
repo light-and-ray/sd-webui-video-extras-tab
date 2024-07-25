@@ -3,7 +3,7 @@ from modules.ui import plaintext_to_html
 from modules import shared
 from modules.postprocessing import run_postprocessing
 import datetime
-from video_extras_tab.video_tools import getVideoFrames, save_video
+from video_extras_tab.video_tools import getVideoFrames, save_video, convertIntoPath
 
 videoTabIndex = 652
 
@@ -24,6 +24,7 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
         shared.state.textinfo = 'video preparing'
         timestamp = int(datetime.datetime.now().timestamp())
         args = list(args)
+        pathIn = convertIntoPath(pathIn)
 
         if pathOut == "":
             pathOut = os.path.join(os.path.dirname(pathIn), f'out_{timestamp}')
