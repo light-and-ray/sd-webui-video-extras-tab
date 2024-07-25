@@ -25,6 +25,7 @@ def process(taskId, pathIn, fps, pathOut, enableLivePreview, *args, **kwargs):
         timestamp = int(datetime.datetime.now().timestamp())
         args = list(args)
         pathIn = convertIntoPath(pathIn)
+        pathOut = convertIntoPath(pathOut)
 
         if pathOut == "":
             pathOut = os.path.join(os.path.dirname(pathIn), f'out_{timestamp}')
