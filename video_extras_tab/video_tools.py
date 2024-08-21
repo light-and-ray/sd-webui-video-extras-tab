@@ -97,3 +97,8 @@ def convertIntoPath(string: str) -> str:
 
         errors.report("Can't be here")
         return string
+
+
+def interrupted():
+    return shared.state.interrupted or getattr(shared.state, 'stopping_generation', False)
+

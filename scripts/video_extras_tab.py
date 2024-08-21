@@ -30,7 +30,7 @@ def addTabIntoExtras(component, **kwargs):
     with tabsExtras:
         with gr.TabItem('Video', id="extras_video", elem_id="extras_video") as tab_video:
             COMPONENTS.pathIn = gr.Textbox(
-                label="Input video",
+                label="Input video", info='(Multiline for batch)',
                 placeholder="A video on the same machine where the server is running.",
                 elem_id="extras_input_video")
             COMPONENTS.fps = gr.Slider(
